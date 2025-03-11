@@ -10,8 +10,8 @@ Beğeni ve yorum gibi etkileşim araçlarıyla topluluğun bir parçası olabili
 
 **Proje Kategorisi:** 
 Sosyal medya,blog sitesi vs.
-**Referans Uygulama:** [medium.com](https://medium.com/)
 
+**Referans Uygulama:** [medium.com](https://medium.com/)
 
 **Uygulama Adresi:** 
 
