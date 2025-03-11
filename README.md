@@ -12,6 +12,7 @@ Beğeni ve yorum gibi etkileşim araçlarıyla topluluğun bir parçası olabili
 Sosyal medya,blog sitesi vs.
 **Referans Uygulama:** [medium.com](https://medium.com/)
 
+
 **Uygulama Adresi:** 
 
 **Grup Adı:** Write & Deploy
