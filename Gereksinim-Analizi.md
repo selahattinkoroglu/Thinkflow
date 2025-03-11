@@ -1,0 +1,21 @@
+# Gereksinimler
+1.Giriş Yap (Selahattin Köroğlu)
+2.Kayıt Ol (Selahattin Köroğlu)
+3.Blog Detayını Görüntüle (Selahattin Köroğlu)
+4.Yorum Ekle (Selahattin Köroğlu)
+5.Yorum Sil (Selahattin Köroğlu)
+6.Yorumları Listele (Selahattin Köroğlu)
+7.Blogları Listele (Selahattin Köroğlu)
+8.Favorilerimi Listele (Selahattin Köroğlu)
+9. Blog Ekleme (Aybora Ünveren)
+10. Blog Düzenleme (Aybora Ünveren)
+11. Blog Silme (Aybora Ünveren)
+12. Blogu Favoriye Ekleme (Aybora Ünveren)
+13. Blogu Beğenilere Ekleme (Aybora Ünveren)
+14. Yazar Profili Görüntüleme (Aybora Ünveren)
+15. Profili Düzenleme (Aybora Ünveren)
+16. Yazara Yorum Bırakma (Aybora Ünveren)
+
+# Gereksinim Dağılımları
+1. [Aybora Ünveren'in Gereksinimleri](Aybora-Unveren-Gereksinimler.md)
+2. [Selahattin Köroğlu'nun Gereksinimleri](Selahattin-Koroglu-Gereksinimler.md)
