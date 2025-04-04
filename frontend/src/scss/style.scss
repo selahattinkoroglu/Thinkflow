@@ -1,15 +1,47 @@
-// If you want to override variables do it here
 @import "variables";
-
-// Import styles
 @import "@coreui/coreui/scss/coreui";
 @import "@coreui/chartjs/scss/coreui-chartjs";
-
-// Vendors
 @import "vendors/simplebar";
-
-// Custom styles for this theme
 @import "theme";
-
-// If you want to add custom CSS you can put it here
 @import "custom";
+
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header-search {
+  .search-input {
+    height: 48px;
+    font-size: 1.1rem;
+  }
+}
+
+.category-button {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.post-card {
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-body {
+    padding: 24px;
+  }
+}
+
+.trending-topics {
+  button {
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+}
