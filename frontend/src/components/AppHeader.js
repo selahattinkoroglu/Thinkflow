@@ -96,7 +96,7 @@ const AppHeader = () => {
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
           <CNavItem>
-            <CNavLink href="#">Profile</CNavLink>
+            <CNavLink href="#/profilim">Profilim</CNavLink>
           </CNavItem>
         </CHeaderNav>
       </CContainer>
