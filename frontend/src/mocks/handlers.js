@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import { API_BASE_URL } from '../config/config'
-// Mock data for individual blog posts
 
+// Mock data for individual blog posts
 const blogPosts = [
   {
     id: 1,
@@ -9,7 +9,7 @@ const blogPosts = [
     excerpt: 'Learn how to create enterprise-level applications using modern web technologies...',
     content: `
       <p>In today's fast-paced digital landscape, building applications that can scale efficiently is crucial for business success. This article explores the best practices for creating enterprise-level applications using React for frontend and Node.js for backend development.</p>
-      
+
       <h3>Why React and Node.js?</h3>
       <p>The combination of React and Node.js offers several advantages:</p>
       <ul>
@@ -18,7 +18,7 @@ const blogPosts = [
         <li>High performance and scalability</li>
         <li>Strong community support</li>
       </ul>
-      
+
       <h3>Architecture for Scalability</h3>
       <p>When building applications that need to handle growth, consider these architectural patterns:</p>
       <ol>
@@ -27,7 +27,7 @@ const blogPosts = [
         <li>Serverless functions for specific operations</li>
         <li>Efficient state management</li>
       </ol>
-      
+
       <h3>Performance Optimization Techniques</h3>
       <p>To ensure your application remains responsive even under heavy load:</p>
       <ul>
@@ -36,7 +36,7 @@ const blogPosts = [
         <li>Optimize database queries and implement caching</li>
         <li>Set up efficient CI/CD pipelines</li>
       </ul>
-      
+
       <p>By following these principles and leveraging the strengths of React and Node.js, you can build applications that not only meet current needs but can also scale effectively as your user base grows.</p>
     `,
     author: {
@@ -53,10 +53,10 @@ const blogPosts = [
     excerpt: 'Discover how GraphQL can simplify your API development and improve client-server interactions...',
     content: `
       <p>GraphQL has rapidly gained popularity as an alternative to REST APIs. This powerful query language for APIs provides clients with the exact data they request and nothing more.</p>
-      
+
       <h3>What is GraphQL?</h3>
       <p>GraphQL is a query language for APIs and a runtime for executing those queries against your data. It allows clients to define the structure of the data required, and the same structure is returned from the server, preventing over-fetching or under-fetching of data.</p>
-      
+
       <h3>Advantages Over REST</h3>
       <ul>
         <li>Request only what you need</li>
@@ -65,7 +65,7 @@ const blogPosts = [
         <li>Introspective - APIs are self-documenting</li>
         <li>Version-free by design</li>
       </ul>
-      
+
       <h3>Key Concepts</h3>
       <ol>
         <li>Schema Definition Language (SDL)</li>
@@ -74,7 +74,7 @@ const blogPosts = [
         <li>Subscriptions for real-time updates</li>
         <li>Resolvers that define how data is fetched</li>
       </ol>
-      
+
       <h3>Implementation Considerations</h3>
       <p>When implementing GraphQL in your applications:</p>
       <ul>
@@ -83,7 +83,7 @@ const blogPosts = [
         <li>Set up authentication and authorization</li>
         <li>Monitor query complexity to prevent abuse</li>
       </ul>
-      
+
       <p>By adopting GraphQL, developers can create more efficient, powerful, and flexible APIs that better serve the needs of modern applications and their users.</p>
     `,
     author: {
@@ -94,17 +94,56 @@ const blogPosts = [
     comments: 32,
     timestamp: '5 hours ago'
   }
-  // You can add more blog posts as needed
 ];
 
+const authors = [
+  {
+    id: 1,
+    isim: 'John',
+    soyisim: 'Maverick',
+    aciklama: 'Yazarlık hayatıma 2000 yılında başladım ve o günden beri hikayelerimi paylaşıyorum.',
+    resim: 'https://spng.pinpng.com/pngs/s/559-5595674_john-doe-png-testimonial-people-transparent-png.png', // Yazar resmi (placeholder)
+  },
+  {
+    id: 2,
+    isim: 'Jane',
+    soyisim: 'Doe',
+    aciklama: 'Gizemli kurgu yazarlığı konusunda uzmanım.',
+    resim: 'https://spng.pinpng.com/pngs/s/559-5595674_john-doe-png-testimonial-people-transparent-png.png',
+  },
+];
 
+// Yorumlar için mock data
+const comments = [
+  {
+    id: 1,
+    authorid: 1,
+    author: 'Ahmet Yılmaz',
+    comment: 'Harika bir makale! Teşekkürler paylaşım için.',
+    timestamp: '3 gün önce'
+  },
+  {
+    id: 2,
+    authorid: 1,
+    author: 'Ayşe Demir',
+    comment: 'Bu konuda daha fazla içerik görmek isterim.',
+    timestamp: '1 hafta önce'
+  },
+  {
+    id: 3,
+    authorid: 2,
+    author: 'Mehmet Kaya',
+    comment: 'Çok bilgilendirici bir yazı olmuş.',
+    timestamp: '2 gün önce'
+  }
+];
 
 export const handlers = [
 
   http.get(`${API_BASE_URL}/posts/:id`, ({ params }) => {
     const { id } = params;
     const post = blogPosts.find(p => p.id === parseInt(id));
-    
+
     if (post) {
       return HttpResponse.json(post);
     } else {
@@ -112,6 +151,20 @@ export const handlers = [
         status: 404,
         statusText: 'Blog post not found'
       });
+    }
+  }),
+
+  http.get(`${API_BASE_URL}/yazarlar/:id`, ({ params }) => {
+    const { id } = params;
+    const author = authors.find(a => a.id === parseInt(id));
+
+    if (author) {
+      return HttpResponse.json(author, { status: 200 });
+    } else {
+      return HttpResponse.json(
+        { status: 'error', message: 'Yazar bulunamadı' },
+        { status: 404 }
+      );
     }
   }),
 
@@ -129,7 +182,6 @@ export const handlers = [
     const soyisim = formData.get('soyisim');
     const aciklama = formData.get('aciklama');
     const foto = formData.get('foto');
-
 
     if (isim && soyisim && aciklama) {
       return HttpResponse.json(
@@ -159,8 +211,25 @@ export const handlers = [
     }
   }),
 
-  
-  http.get(`${API_BASE_URL}/posts`, () => {
+  http.get(`${API_BASE_URL}/posts`, ({ request }) => {
+    const url = new URL(request.url, `${API_BASE_URL}`);
+    const authorid = url.searchParams.get('authorid');
+
+    if (authorid && parseInt(authorid) === 1) {
+      return HttpResponse.json([{
+        id: 1,
+        title: 'Building Scalable Applications with React and Node.js',
+        excerpt: 'Learn how to create enterprise-level applications using modern web technologies...',
+        author: {
+          name: 'John Maverick',
+          avatar: 'https://spng.pinpng.com/pngs/s/559-5595674_john-doe-png-testimonial-people-transparent-png.png',
+        },
+        likes: 234,
+        comments: 45,
+        timestamp: '2 hours ago'
+      }]);
+    }
+
     return HttpResponse.json([
       {
         id: 1,
@@ -210,14 +279,13 @@ export const handlers = [
         comments: 15,
         timestamp: '2 days ago'
       }
-    ])
+    ]);
   }),
 
   // Login mock handler
   http.post(`${API_BASE_URL}/auth/login`, async ({ request }) => {
     const { email, password } = await request.json()
 
-    // Simulate credential check
     if (email === 'test@example.com' && password === 'password123') {
       return HttpResponse.json(
         {
@@ -241,50 +309,67 @@ export const handlers = [
     return HttpResponse.json(
       {
         status: 'error',
-        message: 'Geçersiz email veya şifre',
+        message: 'Geçersiz e-posta veya şifre',
       },
       { status: 401 }
     )
   }),
 
-  http.post(`${API_BASE_URL}/auth/register`, async ({ request }) => {
-    const { username, email, password } = await request.json()
+  // YENİ EKLENEN - Yazarın yorumlarını alma endpoint'i
+  http.get(`${API_BASE_URL}/comments`, ({ request }) => {
+    const url = new URL(request.url, `${API_BASE_URL}`);
+    const authorid = url.searchParams.get('authorid');
 
-    if (!username || !email || !password) {
+    if (authorid) {
+      const authorComments = comments.filter(comment => comment.authorid === parseInt(authorid));
+
       return HttpResponse.json(
-        {
-          status: 'error',
-          message: 'Tüm alanlar zorunludur',
-        },
-        { status: 400 }
-      )
+        authorComments,
+        { status: 200 }
+      );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return HttpResponse.json(
-        {
-          status: 'error',
-          message: 'Geçerli bir email adresi giriniz',
-        },
-        { status: 400 }
-      )
-    }
-
+    // Eğer authorid belirtilmemişse tüm yorumları döndür
     return HttpResponse.json(
-      {
-        status: 'success',
-        data: {
-          user: {
-            id: Math.random().toString(36).substr(2, 9),
-            username,
-            email,
-            role: 'user',
-          },
-        },
-        message: 'Kayıt başarıyla tamamlandı',
-      },
-      { status: 201 }
-    )
+      comments,
+      { status: 200 }
+    );
+  }),
+
+  // YENİ EKLENEN - Yeni yorum ekleme endpoint'i
+  http.post(`${API_BASE_URL}/comments`, async ({ request }) => {
+    try {
+      const data = await request.json();
+      const { authorid, comment } = data;
+
+      if (!authorid || !comment) {
+        return HttpResponse.json(
+          { status: 'error', message: 'Eksik veri gönderildi' },
+          { status: 400 }
+        );
+      }
+
+      // Yeni yorum oluştur
+      const newComment = {
+        id: comments.length + 1,
+        authorid: parseInt(authorid),
+        author: 'Mevcut Kullanıcı', // Giriş yapan kullanıcının adını kullanabilirsiniz
+        comment,
+        timestamp: 'Az önce'
+      };
+
+      // Bu gerçek bir sunucuda comments dizisine eklenirdi
+      // Mock olduğu için sadece yeni yorumu döndürüyoruz
+
+      return HttpResponse.json(
+        newComment,
+        { status: 201 }
+      );
+    } catch (error) {
+      return HttpResponse.json(
+        { status: 'error', message: 'Yorum eklenirken bir hata oluştu' },
+        { status: 500 }
+      );
+    }
   })
 ]
