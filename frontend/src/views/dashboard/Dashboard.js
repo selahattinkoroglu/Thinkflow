@@ -50,36 +50,8 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* Header Section */}
-      <CRow className="mb-4">
-        <CCol>
-          <CInputGroup className="header-search">
-            <CFormInput
-              placeholder="Search articles..."
-              className="border-end-0 search-input"
-            />
-            <CButton color="primary">Search</CButton>
-          </CInputGroup>
-            </CCol>
-          </CRow>
 
-      {/* Categories Section */}
-      <CRow className="mb-4">
-        <CCol>
-          <div className="categories-wrapper d-flex gap-2">
-            {categories.map(category => (
-              <CButton
-                key={category.id}
-                color={activeCategory === category.id ? 'primary' : 'light'}
-                onClick={() => setActiveCategory(category.id)}
-                className="category-button"
-              >
-                {category.name}
-              </CButton>
-            ))}
-                      </div>
-                    </CCol>
-                  </CRow>
+
 
       {/* Main Content */}
       <CRow>
@@ -101,9 +73,7 @@ const Dashboard = () => {
                       <CIcon icon={cilOptions} />
                     </CDropdownToggle>
                     <CDropdownMenu>
-                      <CDropdownItem>Save Post</CDropdownItem>
-                      <CDropdownItem>Share Post</CDropdownItem>
-                      <CDropdownItem>Report</CDropdownItem>
+                      <CDropdownItem>DELETE (IF OWNER)</CDropdownItem>
                     </CDropdownMenu>
                   </CDropdown>
                       </div>
@@ -112,13 +82,7 @@ const Dashboard = () => {
                 <p className="text-medium-emphasis">{post.excerpt}</p>
 
                 <div className="d-flex align-items-center mt-4">
-                  <CBadge color="light" className="me-2">
-                    {post.readTime}
-                  </CBadge>
-                  <CBadge color="light" className="me-2">
-                    {post.category}
-                  </CBadge>
-                  
+
                   <div className="ms-auto d-flex gap-3">
                     <CButton color="light" variant="ghost">
                       <CIcon icon={cilHeart} className="me-1" />
@@ -131,9 +95,6 @@ const Dashboard = () => {
                     <CButton color="light" variant="ghost">
                       <CIcon icon={cilBookmark} />
                     </CButton>
-                    <CButton color="light" variant="ghost">
-                      <CIcon icon={cilShare} />
-                    </CButton>
                       </div>
                     </div>
               </CCardBody>
@@ -141,50 +102,7 @@ const Dashboard = () => {
                   ))}
                 </CCol>
 
-        {/* Right Column - Trending & Tags */}
-        <CCol xs={12} lg={4}>
-          {/* Trending Section */}
-          <CCard className="mb-4">
-            <CCardHeader>
-              <h5 className="mb-0">Trending Topics</h5>
-            </CCardHeader>
-            <CCardBody>
-              <div className="trending-topics">
-                {['React', 'JavaScript', 'Web Development', 'UI/UX', 'DevOps'].map((topic, index) => (
-                  <CButton 
-                    key={index}
-                    color="light" 
-                    variant="outline"
-                    className="me-2 mb-2"
-                  >
-                    #{topic}
-                  </CButton>
-                ))}
-                        </div>
-            </CCardBody>
-          </CCard>
 
-          {/* Popular Writers */}
-          <CCard>
-            <CCardHeader>
-              <h5 className="mb-0">Popular Writers</h5>
-            </CCardHeader>
-            <CCardBody>
-              {[1, 2, 3].map((writer) => (
-                <div key={writer} className="d-flex align-items-center mb-3">
-                  <CAvatar src={`src/assets/images/avatars/${writer}.jpg`} size="md" />
-                          <div className="ms-3">
-                    <h6 className="mb-0">Writer Name</h6>
-                    <small className="text-medium-emphasis">1.2K Followers</small>
-                          </div>
-                  <CButton color="primary" variant="outline" size="sm" className="ms-auto">
-                    Follow
-                  </CButton>
-                        </div>
-              ))}
-            </CCardBody>
-          </CCard>
-        </CCol>
       </CRow>
     </div>
   )
