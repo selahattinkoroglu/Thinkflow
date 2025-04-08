@@ -147,6 +147,14 @@ export const handlers = [
     
     return HttpResponse.json(postComments);
   }),
+  
+  // Belirli bir blog post'un yorumlarını getir
+  http.get(`${API_BASE_URL}/posts/:id/comments`, ({ params }) => {
+    const { id } = params;
+    const postComments = comments.filter(comment => comment.postId === parseInt(id));
+    
+    return HttpResponse.json(postComments);
+  }),
 
   http.get(`${API_BASE_URL}/posts/:id`, ({ params }) => {
     const { id } = params;
