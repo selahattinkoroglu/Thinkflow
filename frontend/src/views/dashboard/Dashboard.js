@@ -2,14 +2,14 @@ import React, { useState, useEffect  } from 'react'
 import { CRow, CCol, CCard, CCardBody, CAvatar, CDropdown, CDropdownToggle, CDropdownMenu, CDropdownItem, CButton, CSpinner } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
 import { cilOptions, cilHeart, cilCommentBubble, cilBookmark } from '@coreui/icons';
-import ApiClient from '../../api/ApiClient'; 
+import ApiClient from '../../api/ApiClient';
 import BlogPost from '../../components/BlogPost';
 
   const Dashboard = () => {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-  
+
     useEffect(() => {
       const fetchPosts = async () => {
         try {
@@ -24,10 +24,10 @@ import BlogPost from '../../components/BlogPost';
           setLoading(false);
         }
       };
-  
+
       fetchPosts();
     }, []);
-  
+
     if (loading) {
       return (
         <div className="d-flex justify-content-center my-5">
@@ -35,7 +35,7 @@ import BlogPost from '../../components/BlogPost';
         </div>
       );
     }
-  
+
     if (error) {
       return (
         <div className="alert alert-danger" role="alert">
@@ -43,7 +43,7 @@ import BlogPost from '../../components/BlogPost';
         </div>
       );
     }
-  
+
     return (
       <div className="dashboard-container">
         <CRow>
@@ -56,7 +56,7 @@ import BlogPost from '../../components/BlogPost';
                   title={post.title}
                   excerpt={post.excerpt}
                   author={post.author}
-                  likes={post.likes}
+                  initialLikes={post.likes}
                   comments={post.comments}
                   timestamp={post.timestamp}
                 />
@@ -73,5 +73,5 @@ import BlogPost from '../../components/BlogPost';
       </div>
     );
   };
-  
+
   export default Dashboard;

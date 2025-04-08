@@ -7,13 +7,13 @@ import {
   cilCursor,
   cilDescription,
   cilDrop,
-  cilExternalLink,
+  cilExternalLink, cilNoteAdd,
   cilNotes,
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
-  cilStar,
-} from '@coreui/icons'
+  cilStar
+} from "@coreui/icons";
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
@@ -26,6 +26,12 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'New Blog',
+    to: '/write',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,

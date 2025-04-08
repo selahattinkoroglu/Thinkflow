@@ -140,6 +140,53 @@ const comments = [
 
 export const handlers = [
 
+  http.post(`${API_BASE_URL}/posts/:id/like`, ({ params }) => {
+    const { id } = params;
+
+    // Blog postu bulunan ve beğenilen gönderi sayısını artıran mock işlem
+    const post = blogPosts.find(p => p.id === parseInt(id));
+    if (post) {
+      post.likes += 1;
+      return HttpResponse.json(
+        {
+          status: 'success',
+          message: `Post ${id} liked successfully.`,
+          likes: post.likes,
+        },
+        { status: 200 }
+      );
+    } else {
+      return HttpResponse.json(
+        { status: 'error', message: 'Post not found' },
+        { status: 404 }
+      );
+    }
+  }),
+
+  http.delete(`${API_BASE_URL}/posts/:id/like`, ({ params }) => {
+    const { id } = params;
+
+    // Blog postu bulunan ve beğenilen gönderi sayısını azaltan mock işlem
+    const post = blogPosts.find(p => p.id === parseInt(id));
+    if (post) {
+      post.likes = Math.max(0, post.likes - 1); // Beğeniler sıfırdan küçük olmasın
+      return HttpResponse.json(
+        {
+          status: 'success',
+          message: `Post ${id} unliked successfully.`,
+          likes: post.likes,
+        },
+        { status: 200 }
+      );
+    } else {
+      return HttpResponse.json(
+        { status: 'error', message: 'Post not found' },
+        { status: 404 }
+      );
+    }
+  }),
+
+
   http.get(`${API_BASE_URL}/posts/:id`, ({ params }) => {
     const { id } = params;
     const post = blogPosts.find(p => p.id === parseInt(id));
@@ -163,6 +210,28 @@ export const handlers = [
     } else {
       return HttpResponse.json(
         { status: 'error', message: 'Yazar bulunamadı' },
+        { status: 404 }
+      );
+    }
+  }),
+
+  http.put(`${API_BASE_URL}/posts/:id`, ({ params, request }) => {
+    const { id } = params;
+    const { title, excerpt } = request.json();
+
+    // Postları bulma
+    const post = blogPosts.find(p => p.id === parseInt(id));
+
+    if (post) {
+      // Post varsa, güncelle
+      post.title = title;
+      post.excerpt = excerpt;
+
+      return HttpResponse.json(post, { status: 200 });
+    } else {
+      // Post bulunamazsa
+      return HttpResponse.json(
+        { status: 'error', message: 'Post bulunamadı' },
         { status: 404 }
       );
     }
@@ -315,6 +384,48 @@ export const handlers = [
     )
   }),
 
+  http.delete(`${API_BASE_URL}/posts/:id`, ({ params }) => {
+    const { id } = params;
+    const index = blogPosts.findIndex(post => post.id === parseInt(id));
+
+    if (id !== 1) {
+      blogPosts.splice(index, 1); // mock veriyi sil
+      return HttpResponse.json({ result: 1 }, { status: 200 }); // başarılı
+    } else {
+      return HttpResponse.json({ result: 0 }, { status: 404 }); // bulunamadı
+    }
+  }),
+
+  http.post(`${API_BASE_URL}/blog/ekle`, async ({ request }) => {
+    const body = await request.json()
+    const { baslik, icerik } = body
+
+    if (!baslik || !icerik) {
+      return HttpResponse.json(
+        { status: 'error', message: 'Eksik bilgi gönderildi' },
+        { status: 400 }
+      )
+    }
+
+    const newId = blogPosts.length > 0 ? blogPosts[blogPosts.length - 1].id + 1 : 1
+
+    const newPost = {
+      id: newId,
+      baslik,
+      icerik,
+      likes: 0,
+      comments: 0,
+      timestamp: 'az önce'
+    }
+
+    blogPosts.push(newPost)
+
+    return HttpResponse.json(
+      { status: 'success', message: 'Blog yazısı eklendi', data: newPost },
+      { status: 201 }
+    )
+  }),
+
   // YENİ EKLENEN - Yazarın yorumlarını alma endpoint'i
   http.get(`${API_BASE_URL}/comments`, ({ request }) => {
     const url = new URL(request.url, `${API_BASE_URL}`);
@@ -332,6 +443,32 @@ export const handlers = [
     // Eğer authorid belirtilmemişse tüm yorumları döndür
     return HttpResponse.json(
       comments,
+      { status: 200 }
+    );
+  }),
+
+
+  http.post(`${API_BASE_URL}/posts/:id/bookmark`, ({ params }) => {
+    const { id } = params;
+
+    // Basit bir başarı cevabı döndürüyoruz
+    return HttpResponse.json(
+      {
+        status: 'success',
+        message: `Post ${id} başarıyla yer imlerine eklendi.`,
+      },
+      { status: 200 }
+    );
+  }),
+
+  http.delete(`${API_BASE_URL}/posts/:id/bookmark`, ({ params }) => {
+    const { id } = params;
+
+    return HttpResponse.json(
+      {
+        status: 'success',
+        message: `Post ${id} yer imlerinden kaldırıldı.`,
+      },
       { status: 200 }
     );
   }),
