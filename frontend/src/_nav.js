@@ -8,6 +8,7 @@ import {
   cilDescription,
   cilDrop,
   cilExternalLink,
+  cilHeart,
   cilNotes,
   cilPencil,
   cilPuzzle,
@@ -26,6 +27,12 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'Favorilerim',
+    to: '/favorites',
+    icon: <CIcon icon={cilHeart} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
