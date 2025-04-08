@@ -96,10 +96,50 @@ const blogPosts = [
   }
   // You can add more blog posts as needed
 ];
-
-
-
+const comments = [
+  {
+    id: 1,
+    postId: 1,
+    content: "Bu makale gerçekten çok faydalı oldu, teşekkürler!",
+    author: {
+      id: "c7b3d8e0-5e0b-4b0f-8b3a-3b9f4b3d3b3d",
+      name: "John Maverick",
+      avatar: "/assets/images/avatars/5.jpg",
+    },
+    createdAt: "2025-04-08T10:30:00Z"
+  },
+  {
+    id: 2,
+    postId: 1,
+    content: "React ve Node.js hakkında daha fazla içerik paylaşır mısınız?",
+    author: {
+      id: "a1b2c3d4-5e6f-7g8h-9i0j-1k2l3m4n5o6p",
+      name: "Lisa Chen",
+      avatar: "/assets/images/avatars/4.jpg",
+    },
+    createdAt: "2025-04-08T11:15:00Z"
+  },
+  {
+    id: 3,
+    postId: 2,
+    content: "GraphQL konusunda yeni başlayanlar için harika bir rehber!",
+    author: {
+      id: "f5e4d3c2-b1a0-9i8u-7y6t-5r4e3w2q1",
+      name: "Michael Brown",
+      avatar: "/assets/images/avatars/3.jpg", 
+    },
+    createdAt: "2025-04-07T14:20:00Z"
+  }
+];
 export const handlers = [
+  
+  // Belirli bir blog post'un yorumlarını getir
+  http.get(`${API_BASE_URL}/posts/:id/comments`, ({ params }) => {
+    const { id } = params;
+    const postComments = comments.filter(comment => comment.postId === parseInt(id));
+    
+    return HttpResponse.json(postComments);
+  }),
 
   http.get(`${API_BASE_URL}/posts/:id`, ({ params }) => {
     const { id } = params;
@@ -159,7 +199,36 @@ export const handlers = [
     }
   }),
 
-  
+  http.get(`${API_BASE_URL}/favorites`, () => {
+    return HttpResponse.json([
+      {
+        id: 1,
+        title: 'Building Scalable Applications with React and Node.js',
+        excerpt: 'Learn how to create enterprise-level applications using modern web technologies...',
+        author: {
+          name: 'John Doe',
+          avatar: '/assets/images/avatars/1.jpg',
+        },
+        likes: 234,
+        comments: 45,
+        timestamp: '2 hours ago'
+      },
+      {
+        id: 2,
+        title: 'Introduction to GraphQL APIs',
+        excerpt: 'Discover how GraphQL can simplify your API development and improve client-server interactions...',
+        author: {
+          name: 'Jane Smith',
+          avatar: '/assets/images/avatars/2.jpg',
+        },
+        likes: 187,
+        comments: 32,
+        timestamp: '5 hours ago'
+      },
+    ])
+  }),
+
+
   http.get(`${API_BASE_URL}/posts`, () => {
     return HttpResponse.json([
       {
