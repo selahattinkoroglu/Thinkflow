@@ -8,7 +8,7 @@ import {
   cilDescription,
   cilDrop,
   cilExternalLink,
-  cilHeart,
+  cilNoteAdd,
   cilNotes,
   cilPencil,
   cilPuzzle,
@@ -27,6 +27,12 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'New Blog',
+    to: '/write',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
