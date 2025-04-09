@@ -9,6 +9,7 @@ import {
   cilDrop,
   cilExternalLink,
   cilNoteAdd,
+  cilHeart,
   cilNotes,
   cilPencil,
   cilPuzzle,
