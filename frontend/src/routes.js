@@ -5,7 +5,6 @@ import YazarProfili from "src/components/YazarProfili";
 import BlogEkle from "src/views/blog/BlogEkle";
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const DashboardFav = React.lazy(() => import('./views/favorites/DashboardFav'))
-const DashboardFav = React.lazy(() => import('./views/favorites/DashboardFav'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home', element: Dashboard},
