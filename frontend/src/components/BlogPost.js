@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   CCard, CCardBody, CAvatar, CDropdown, CDropdownToggle, CToastBody,
   CDropdownMenu, CDropdownItem, CButton, CModal, CModalHeader, CToaster, CToast,
@@ -10,6 +10,7 @@ import { cilOptions, cilHeart, cilCommentBubble, cilBookmark } from '@coreui/ico
 import apiClient from '../api/ApiClient';
 
 const BlogPost = ({ id, title, excerpt, author, initialLikes, comments, timestamp }) => {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false); // Silme onay modali
   const [successToast, setSuccessToast] = useState(false); // Silme toast
   const [bookmarked, setBookmarked] = useState(false); // Bookmark durumu
@@ -103,6 +104,10 @@ const BlogPost = ({ id, title, excerpt, author, initialLikes, comments, timestam
       }
     };
 
+  const handleCommentClick = () => {
+    navigate(`/blogs/${id}`, { state: { showComments: true } });
+  };
+
   return (
     <>
       <CCard className="mb-4 post-card">
@@ -139,7 +144,11 @@ const BlogPost = ({ id, title, excerpt, author, initialLikes, comments, timestam
                 <CIcon icon={cilHeart} className="me-1" />
                 {likes}
               </CButton>
-              <CButton color="light" variant="ghost">
+              <CButton 
+                color="light" 
+                variant="ghost"
+                onClick={handleCommentClick}
+              >
                 <CIcon icon={cilCommentBubble} className="me-1" />
                 {comments}
               </CButton>

@@ -117,6 +117,7 @@ const authors = [
 const comments = [
   {
     id: 1,
+    postId: 1, // Blog post ID'si eklendi
     authorid: 1,
     author: 'Ahmet Yılmaz',
     comment: 'Harika bir makale! Teşekkürler paylaşım için.',
@@ -124,6 +125,7 @@ const comments = [
   },
   {
     id: 2,
+    postId: 1, // Blog post ID'si eklendi
     authorid: 1,
     author: 'Ayşe Demir',
     comment: 'Bu konuda daha fazla içerik görmek isterim.',
@@ -131,6 +133,7 @@ const comments = [
   },
   {
     id: 3,
+    postId: 2, // Blog post ID'si eklendi
     authorid: 2,
     author: 'Mehmet Kaya',
     comment: 'Çok bilgilendirici bir yazı olmuş.',
@@ -490,14 +493,14 @@ export const handlers = [
   }),
 
   // YENİ EKLENEN - Yeni yorum ekleme endpoint'i
-  http.post(`${API_BASE_URL}/comments`, async ({ request }) => {
+  http.post(`${API_BASE_URL}/posts/:id/comments`, async ({ params, request }) => {
     try {
-      const data = await request.json();
-      const { authorid, comment } = data;
+      const { id } = params;
+      const { comment } = await request.json();
 
-      if (!authorid || !comment) {
+      if (!comment) {
         return HttpResponse.json(
-          { status: 'error', message: 'Eksik veri gönderildi' },
+          { status: 'error', message: 'Yorum boş olamaz' },
           { status: 400 }
         );
       }
@@ -505,24 +508,59 @@ export const handlers = [
       // Yeni yorum oluştur
       const newComment = {
         id: comments.length + 1,
-        authorid: parseInt(authorid),
-        author: 'Mevcut Kullanıcı', // Giriş yapan kullanıcının adını kullanabilirsiniz
+        postId: parseInt(id),
+        authorid: 1, // Giriş yapan kullanıcının ID'si
+        author: 'Mevcut Kullanıcı',
         comment,
         timestamp: 'Az önce'
       };
 
-      // Bu gerçek bir sunucuda comments dizisine eklenirdi
-      // Mock olduğu için sadece yeni yorumu döndürüyoruz
+      // Mock veritabanına ekle
+      comments.push(newComment);
 
-      return HttpResponse.json(
-        newComment,
-        { status: 201 }
-      );
+      // Blog postunun yorum sayısını güncelle
+      const post = blogPosts.find(p => p.id === parseInt(id));
+      if (post) {
+        post.comments = comments.filter(c => c.postId === parseInt(id)).length;
+      }
+
+      return HttpResponse.json(newComment, { status: 201 });
     } catch (error) {
       return HttpResponse.json(
         { status: 'error', message: 'Yorum eklenirken bir hata oluştu' },
         { status: 500 }
       );
     }
+  }),
+
+  // Yorum silme endpoint'i
+  http.delete(`${API_BASE_URL}/posts/:postId/comments/:commentId`, ({ params }) => {
+    const { postId, commentId } = params;
+    
+    // Yorumu bul ve sil
+    const commentIndex = comments.findIndex(
+      c => c.id === parseInt(commentId) && c.postId === parseInt(postId)
+    );
+
+    if (commentIndex === -1) {
+      return HttpResponse.json(
+        { status: 'error', message: 'Yorum bulunamadı' },
+        { status: 404 }
+      );
+    }
+
+    // Yorumu sil
+    comments.splice(commentIndex, 1);
+
+    // Blog postunun yorum sayısını güncelle
+    const post = blogPosts.find(p => p.id === parseInt(postId));
+    if (post) {
+      post.comments = comments.filter(c => c.postId === parseInt(postId)).length;
+    }
+
+    return HttpResponse.json(
+      { status: 'success', message: 'Yorum başarıyla silindi' },
+      { status: 200 }
+    );
   })
 ]
