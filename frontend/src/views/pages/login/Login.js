@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -12,11 +12,56 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
+  CAlert,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import ApiClient from '../../../api/ApiClient'
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    
+    // Form validasyonu
+    if (!email || !password) {
+      setError('Lütfen email ve şifre alanlarını doldurun.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+      
+      const response = await ApiClient.post('/auth/login', {
+        email,
+        password
+      });
+
+      // Login başarılı olursa
+      if (response.status === 200) {
+        console.log('Login başarılı:', response.data);
+        
+        // Token'ı localStorage'a kaydet
+        localStorage.setItem('token', response.data.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.data.user));
+        
+        // Anasayfaya yönlendir
+        navigate('/');
+      }
+    } catch (err) {
+      console.error('Login hatası:', err);
+      setError(err.response?.data?.message || 'Giriş yapılırken bir hata oluştu.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -25,14 +70,23 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={handleLogin}>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
+                    
+                    {error && <CAlert color="danger">{error}</CAlert>}
+                    
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput 
+                        placeholder="Email" 
+                        autoComplete="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -42,12 +96,15 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
-                          Login
+                        <CButton type="submit" color="primary" className="px-4" disabled={loading}>
+                          {loading ? 'Giriş yapılıyor...' : 'Login'}
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
