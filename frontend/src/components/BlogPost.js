@@ -115,7 +115,7 @@ const BlogPost = ({ id, title, excerpt, author, initialLikes, comments, timestam
           <div className="d-flex align-items-center mb-3">
             <CAvatar src={author.avatar} size="md" />
             <div className="ms-3">
-              <h6 className="mb-0">{author.name}</h6>
+              <h6 className="mb-0"><a href={`/#/yazarlar/${author.id}`}>{author.name}</a></h6>
               <small className="text-medium-emphasis">{timestamp}</small>
             </div>
             <CDropdown className="ms-auto">
@@ -144,8 +144,8 @@ const BlogPost = ({ id, title, excerpt, author, initialLikes, comments, timestam
                 <CIcon icon={cilHeart} className="me-1" />
                 {likes}
               </CButton>
-              <CButton 
-                color="light" 
+              <CButton
+                color="light"
                 variant="ghost"
                 onClick={handleCommentClick}
               >

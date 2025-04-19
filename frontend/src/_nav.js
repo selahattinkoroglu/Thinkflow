@@ -41,16 +41,6 @@ const _nav = [
     to: '/favorites',
     icon: <CIcon icon={cilHeart} customClassName="nav-icon" />,
   },
-  {
-    component: CNavTitle,
-    name: 'Theme',
-  },
-  {
-    component: CNavItem,
-    name: 'Colors',
-    to: '/theme/colors',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
-  },
 ]
 
 export default _nav

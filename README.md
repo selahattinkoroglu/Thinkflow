@@ -13,7 +13,7 @@ Sosyal medya,blog sitesi vs.
 
 **Referans Uygulama:** [medium.com](https://medium.com/)
 
-**Uygulama Adresi:** 
+**Uygulama Adresi:** [thinkflow-five.vercel.app](https://thinkflow-five.vercel.app)
 
 **Grup Adı:** Write & Deploy
 
@@ -22,6 +22,6 @@ Sosyal medya,blog sitesi vs.
 1. [Gereksinim Analizi](Gereksinim-Analizi.md)
 2. [Durum Diyagramı](Durum-Diyagramı.md)
 3. [Durum Senaryoları](Durum-Senaryoları.md)
-4. [Front-End](Front-End.md)
+4. [Front-End](./frontend)
 5. [Back-End](Back-End.md)
 6. [Video Sunum](Sunum.md)

@@ -116,7 +116,7 @@ const AppHeader = () => {
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
           </li>
-          
+
           {authenticated ? (
             // Authenticated user navigation
             <>
@@ -124,11 +124,11 @@ const AppHeader = () => {
                 <CNavLink href="#/profilim">Profilim</CNavLink>
               </CNavItem>
               <CNavItem>
-                <CButton 
-                  color="danger" 
-                  variant="outline" 
-                  size="sm" 
-                  className="ms-2 d-flex align-items-center" 
+                <CButton
+                  color="danger"
+                  variant="outline"
+                  size="sm"
+                  className="ms-2 d-flex align-items-center"
                   onClick={handleLogout}
                 >
                   <CIcon icon={cilAccountLogout} className="me-2" />
@@ -146,9 +146,9 @@ const AppHeader = () => {
                 </CNavLink>
               </CNavItem>
               <CNavItem>
-                <CButton color="primary" size="sm" className="ms-2" href="#/register">
+                <CNavLink href="#/register" className="d-flex align-items-center">
                   Sign Up
-                </CButton>
+                </CNavLink>
               </CNavItem>
             </>
           )}

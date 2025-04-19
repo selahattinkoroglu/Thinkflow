@@ -142,20 +142,20 @@ const comments = [
 ];
 
 export const handlers = [
-  
+
   // Belirli bir blog post'un yorumlarını getir
   http.get(`${API_BASE_URL}/posts/:id/comments`, ({ params }) => {
     const { id } = params;
     const postComments = comments.filter(comment => comment.postId === parseInt(id));
-    
+
     return HttpResponse.json(postComments);
   }),
-  
+
   // Belirli bir blog post'un yorumlarını getir
   http.get(`${API_BASE_URL}/posts/:id/comments`, ({ params }) => {
     const { id } = params;
     const postComments = comments.filter(comment => comment.postId === parseInt(id));
-    
+
     return HttpResponse.json(postComments);
   }),
 
@@ -324,8 +324,9 @@ export const handlers = [
         title: 'Building Scalable Applications with React and Node.js',
         excerpt: 'Learn how to create enterprise-level applications using modern web technologies...',
         author: {
-          name: 'John Doe',
-          avatar: '/assets/images/avatars/1.jpg',
+          id: 1,
+          name: 'John Maverick',
+          avatar: 'https://spng.pinpng.com/pngs/s/559-5595674_john-doe-png-testimonial-people-transparent-png.png',
         },
         likes: 234,
         comments: 45,
@@ -336,8 +337,9 @@ export const handlers = [
         title: 'Introduction to GraphQL APIs',
         excerpt: 'Discover how GraphQL can simplify your API development and improve client-server interactions...',
         author: {
+          id: 2,
           name: 'Jane Smith',
-          avatar: '/assets/images/avatars/2.jpg',
+          avatar: '/src/assets/images/avatars/2.jpg',
         },
         likes: 187,
         comments: 32,
@@ -348,8 +350,9 @@ export const handlers = [
         title: 'Mastering CSS Grid Layouts',
         excerpt: 'A comprehensive guide to creating complex web layouts using the power of CSS Grid...',
         author: {
+          id: 3,
           name: 'Robert Johnson',
-          avatar: '/assets/images/avatars/3.jpg',
+          avatar: '/src/assets/images/avatars/3.jpg',
         },
         likes: 156,
         comments: 21,
@@ -360,8 +363,9 @@ export const handlers = [
         title: 'DevOps Best Practices for Small Teams',
         excerpt: 'How to implement efficient DevOps workflows even with limited resources and small team sizes...',
         author: {
+          id: 4,
           name: 'Lisa Williams',
-          avatar: '/assets/images/avatars/4.jpg',
+          avatar: '/src/assets/images/avatars/4.jpg',
         },
         likes: 98,
         comments: 15,
@@ -393,14 +397,28 @@ export const handlers = [
         { status: 200 }
       )
     }
+  }),
 
-    return HttpResponse.json(
-      {
-        status: 'error',
-        message: 'Geçersiz e-posta veya şifre',
-      },
-      { status: 401 }
-    )
+    // Login mock handler
+    http.post(`${API_BASE_URL}/auth/register`, async ({  }) => {
+
+        return HttpResponse.json(
+          {
+            status: 'success',
+            data: {
+              token: 'mock-jwt-token-xyz123',
+              user: {
+                id: 'c7b3d8e0-5e0b-4b0f-8b3a-3b9f4b3d3b3d',
+                email: 'test@example.com',
+                firstName: 'John',
+                lastName: 'Maverick',
+                role: 'user',
+              },
+            },
+            message: 'Kayıt başarılı',
+          },
+          { status: 200 }
+        )
   }),
 
   http.delete(`${API_BASE_URL}/posts/:id`, ({ params }) => {
@@ -536,7 +554,7 @@ export const handlers = [
   // Yorum silme endpoint'i
   http.delete(`${API_BASE_URL}/posts/:postId/comments/:commentId`, ({ params }) => {
     const { postId, commentId } = params;
-    
+
     // Yorumu bul ve sil
     const commentIndex = comments.findIndex(
       c => c.id === parseInt(commentId) && c.postId === parseInt(postId)
