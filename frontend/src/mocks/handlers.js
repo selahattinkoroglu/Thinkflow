@@ -339,7 +339,7 @@ export const handlers = [
         author: {
           id: 2,
           name: 'Jane Smith',
-          avatar: '/src/assets/images/avatars/2.jpg',
+          avatar: '/dist/assets/images/avatars/2.jpg',
         },
         likes: 187,
         comments: 32,
@@ -352,7 +352,7 @@ export const handlers = [
         author: {
           id: 3,
           name: 'Robert Johnson',
-          avatar: '/src/assets/images/avatars/3.jpg',
+          avatar: '/dist/assets/images/avatars/3.jpg',
         },
         likes: 156,
         comments: 21,
@@ -365,7 +365,7 @@ export const handlers = [
         author: {
           id: 4,
           name: 'Lisa Williams',
-          avatar: '/src/assets/images/avatars/4.jpg',
+          avatar: '/dist/assets/images/avatars/4.jpg',
         },
         likes: 98,
         comments: 15,
