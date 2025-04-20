@@ -25,3 +25,7 @@ Sosyal medya,blog sitesi vs.
 4. [Front-End](./frontend/Frontend.md)
 5. [Back-End](Back-End.md)
 6. [Video Sunum](Sunum.md)
+
+**Frontend kullanıcı girişi için kimlik detayları:**
+Email: test@example.com
+Şifre: password123
